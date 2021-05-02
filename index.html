@@ -126,9 +126,12 @@
 
 
         let vid = document.getElementById("video");
-        vid.onended = function () {
-            alert("The video has ended");
-        };
+        // vid.onended = function () {
+        //     alert("The video has ended");
+        // };
+        vid.addEventListener("ended", function() {
+					console.log("The video has ended");
+				}) 
 //         setTimeout(setInterval(vid.onended = function() {
 //     alert("The video has ended");
 // }, 3000), 5000);
