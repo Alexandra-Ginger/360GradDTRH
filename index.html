@@ -1,78 +1,328 @@
 ﻿<!DOCTYPE html>
 <html>
+  <head>
+    <title>Down the rabbit hole!</title>
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .restart {
-            display: inline-block;
-            padding: 15px 25px;
-            font-size: 24px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            outline: none;
-            color: #fff;
-            background-color: #ac0831;
-            border: none;
-            border-radius: 100px;
-            height: 18vh; 
-            width: 18vh;
-            box-shadow: 2px 8px rgb(39, 0, 2);
-        }
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script>
+  AFRAME.components["look-controls"].Component.prototype.onTouchMove = function (t) {
+                        var PI_2 = Math.PI/2,
+                        e,
+                        o = this.el.sceneEl.canvas,
+                        i = this.yawObject,
+                        j = this.pitchObject;
+                        this.touchStarted && this.data.touchEnabled && (e = 2 * Math.PI * (t.touches[0].pageX - this.touchStart.x) / o.clientWidth, f = 2 * Math.PI * (t.touches[0].pageY - this.touchStart.y) / o.clientHeight, j.rotation.x += .3 * f, i.rotation.y += .5 * e, j.rotation.x = Math.max(-PI_2, Math.min(PI_2, j.rotation.x)), this.touchStart = {
+                                x: t.touches[0].pageX,
+                                y: t.touches[0].pageY
+                            })
+  }</script>
+	<script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-look-at-component@^0.8.0/dist/aframe-look-at-component.min.js"></script>
+  
+    <style type="text/css">
+      #splash {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
 
-        .restart:hover {
-            background-color: #c40837
-        }
-
-        .restart:active {
-            background-color: #ac0831;
-            box-shadow: 0 5px #666;
-            transform: translateY(4px);
-        }
+        align-items: center;
+        justify-content: center;
+        
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        cursor: pointer;
+        z-index: 999;
+      }
     </style>
-</head>
+    
+    <!--- Activating Cube Erna --->
+    <script>
+		AFRAME.registerComponent('playe', {
+			init: function () {
+				var myEl = document.querySelector('#cubeerna');
+        var myVidE = document.querySelector('#heartbeat_erna');
+				this.el.addEventListener('click', function () {
+					myEl.components.sound.playSound();
+          myVidE.play();
+				});
+			}
+		});
+      
+      
+		AFRAME.registerComponent('stope', {
+			init: function () {
+				var myEl = document.querySelector('#cubeerna');
+        var myVidE = document.querySelector('#heartbeat_erna');
+				this.el.addEventListener('click', function () {
+					myEl.components.sound.stopSound();
+          myVidE.currentTime = 0;
+          myVidE.pause();
+				});
+			}
+		});
+	</script>
+    
+  <!--- Activating Cube Andrea --->
+  <script>
+		AFRAME.registerComponent('playa', {
+			init: function () {
+				var myEl = document.querySelector('#cubeandrea');
+				this.el.addEventListener('click', function () {
+					myEl.components.sound.playSound();
+				});
+			}
+		});
+		AFRAME.registerComponent('stopa', {
+			init: function () {
+				var myEl = document.querySelector('#cubeandrea');
+				this.el.addEventListener('click', function () {
+					myEl.components.sound.stopSound();
+				});
+			}
+		});
+	</script>
+    
+  <!--- Activating Cube Georg--->
+    <script>
+		AFRAME.registerComponent('playg', {
+			init: function () {
+				var myEl = document.querySelector('#cubegeorg');
+				this.el.addEventListener('click', function () {
+					myEl.components.sound.playSound();
+				});
+			}
+		});
+		AFRAME.registerComponent('stopg', {
+			init: function () {
+				var myEl = document.querySelector('#cubegeorg');
+				this.el.addEventListener('click', function () {
+					myEl.components.sound.stopSound();
+				});
+			}
+		});
+	</script>
+    
+    
+     <!--- Activating Cube Mary --->
+  <script>
+		AFRAME.registerComponent('playm', {
+			init: function () {
+				var myEl = document.querySelector('#cubemary');
+				this.el.addEventListener('click', function () {
+					myEl.components.sound.playSound();
+				});
+			}
+		});
+		AFRAME.registerComponent('stopm', {
+			init: function () {
+				var myEl = document.querySelector('#cubemary');
+				this.el.addEventListener('click', function () {
+					myEl.components.sound.stopSound();
+				});
+			}
+		});
+	</script>
+    
+    
+    <!--- Loading, mobile?--->
+    <script>
+      document.addEventListener("DOMContentLoaded", function(event) {
+        var scene = document.querySelector("a-scene");
+        var vid = document.getElementById("video");
+        var proj = document.getElementById("proj");
 
-<body>
-
-    <video width="400" controls id="video">
-        <source src="mov_bbb.mp4" type="video/mp4">
-        <source src="mov_bbb.ogg" type="video/ogg">
-        Your browser does not support HTML video.
-    </video>
-
+        if (scene.hasLoaded) {
+          run();
+        } else {
+          scene.addEventListener("loaded", run);
+        }
+        
+        function run () {
+          if(AFRAME.utils.device.isMobile()) {
+            document.querySelector('#splash').style.display = 'flex';
+            document.querySelector('#splash').addEventListener('click', function () {
+              playVideo();
+              this.style.display = 'none';
+            })
+          } else {
+              playVideo();
+          }
+        }
+        
+        function playVideo () {
+          vid.play();
+          proj.components.material.material.map.image.play();
+          vid.addEventListener("ended", function() {
+					console.log("The video has ended");
+				}) 
+        }
+      })
+    </script>
+    
+				
+    <script src="https://unpkg.com/aframe-multi-video-component/dist/aframe-multi-video-component.min.js"></script>
+    
+    <!--- behavior Projection when Cube activated--->
+    <script>
+		AFRAME.registerComponent('slowdown', {
+			init: function () {
+    var myVideo = document.querySelector('#video');
+				this.el.addEventListener('click', function () {
+					    myVideo.playbackRate = 0.5;
+              myVideo.volume = 0.05;
+				});
+			}
+		});
+	</script>
+    
+    <!--- reset behavior Projection when Cube deactivated--->
+        <script>
+		AFRAME.registerComponent('speedup', {
+			init: function () {
+    var myVideo = document.querySelector('#video');
+				this.el.addEventListener('click', function () {
+					    myVideo.playbackRate = 1;
+              myVideo.volume = 1;
+				});
+			}
+		});
+	</script>
+    
+  </head> 
+  
+  
+  <body>
+    
+    
+    <div id="splash">
+    <div id="start-button">Los geht's!</div>
     <button class="restart">
         Restart
     </button>
+    </div>
+    
+    <a-scene antialias="true">
+      
+      <!--- assets--->
+      <a-assets timeout="10000">
+        <video id="video" preload="auto" src="https://cdn.glitch.com/6b3be800-0d26-4cf5-b0e0-e1ae2231fc02%2FUnbenannt-1.mp4?v=1619422761090" webkit-playsinline crossorigin="anonymous"></video>
+        <video id="heartbeat_erna" preload="auto" src="https://cdn.glitch.com/6b3be800-0d26-4cf5-b0e0-e1ae2231fc02%2FStrobo%20Video%20Light.mp4?v=1619540391152" webkit-playsinline crossorigin="anonymous"></video>
+        <audio id="erna" preload="auto" src="https://cdn.glitch.com/6b3be800-0d26-4cf5-b0e0-e1ae2231fc02%2FErna_Rentnerin_01.mp3?v=1619508162160" crossorigin="anonymous"></audio>
+        <audio id="mary" preload="auto" src="https://cdn.glitch.com/84b690e5-1cc8-41d6-b924-da49b51d872a%2FMary_Studentin_20210425_01.mp3?v=1619768669644"></audio>
+        <audio id="andrea" preload="auto" src="https://cdn.glitch.com/6b3be800-0d26-4cf5-b0e0-e1ae2231fc02%2FAndrea_Verschwoerungsideologin_fuer%20Einreichung_20210130_01.mp3?v=1619508155901" crossorigin="anonymous"></audio>
+        <audio id="georg" preload="auto" src="https://cdn.glitch.com/6b3be800-0d26-4cf5-b0e0-e1ae2231fc02%2FGeorg_Altenpfleger_20210129_01.mp3?v=1619508156612" crossorigin="anonymous"></audio>
+        <image id="close" src ="https://cdn.glitch.com/6b3be800-0d26-4cf5-b0e0-e1ae2231fc02%2Fkisspng-computer-icons-symbol-circle-black-close-icon-5ab0da57bf6214.2979679915215396717839.png?v=1619440080274" crossorigin="anonymous"></image>
+      </a-assets>
+      
 
-    <script>
-        function openCity(evt, cityName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
+      
+      <!--- cam and cursor--->
+      <a-camera id="cam">
+        <a-entity cursor="fuse: true; fuseTimeout: 1000" position="0 0 -1"
+					  geometry="primitive: sphere; radius: 0.005"
+					  material="color: #FFFFFF; shader: flat; opacity: 0.5">
+					  <a-animation attribute="scale"
+					  			   to="3 3 3"
+					  			   dur="1000"
+					  			   begin="cursor-fusing"
+					  			   fill="backwards"
+					  			   easing="linear">
+					  </a-animation>
+			  </a-entity>                                                 
+                               
+      </a-camera>
+      
+      
+      <!--- lights--->
+      <a-entity light="type:ambient; intensity: 0.4"></a-entity>
+      <a-entity id="spot1" light="type: spot; color: #fff957; angle: 40.81; penumbra: 0.5" position="7.0255 3.71899 -5.05592" rotation="-90 0 0" ></a-entity>
+      <a-entity id="spot2" light="type: spot; color: #fff957; angle: 40.81; penumbra: 0.5" position="-0.99035 3.71899 -9.97796" rotation="-90 0 0" ></a-entity>
+      <a-entity id="spot3" light="type: spot; color: #fff957;  angle: 40.81; penumbra: 0.5" position="-5.98869 3.71899 -2.94086" rotation="-90 0 0" ></a-entity>
+      <a-entity id="spot4" light="type: spot; color: #fff957;  angle: 40.81; penumbra: 0.5" position="-0.5 3.71899 7" rotation="-90 0 0" ></a-entity>
+      
+      
+      <!--- video--->
+      
+      <a-videosphere id="proj" src="#video">
+      </a-videosphere> 
+
+            
+      <!--- floor--->
+      <a-plane id="boden" material="color:#574c4c" rotation= "-90 0 0" scale="1000 1000 1" position="0 -1.73 0">
+      </a-plane>
+      
+      
+      <!--- activatable cubes, changing color, with an audio and the heartbeat--->
+      
 
 
-        let vid = document.getElementById("video");
-        // vid.onended = function () {
-        //     alert("The video has ended");
-        // };
-        vid.addEventListener("ended", function() {
-					console.log("The video has ended");
-				}) 
-//         setTimeout(setInterval(vid.onended = function() {
-//     alert("The video has ended");
-// }, 3000), 5000);
-    </script>
+      <!-- Erna -->
+		  <a-box id="cubeerna" width= "1" height= "5" depth= "1"
+        color="#a38e62" position="-6 0 -3"
+        material="src: #heartbeat_erna"
+        sound="src: #erna; volume:5"
+			  event-set__enter="_event: mouseenter; material.color: #f0e29e"
+			  event-set__leave="_event: mouseleave; material.color: #a38e62"
+			  event-set__tarvis="_event: click; _target: #closeerna; visible: true" playe slowdown>
+	  	</a-box>
+       
+		    <a-image id="closeerna" src="#close" position="-6 3.383 -3" visible="false" look-at="#cam"
+			     event-set__resvis="_event: click; visible: false" stope speedup>
+		    </a-image>
 
-</body>
+      
+      <!-- Andrea -->
+		  <a-box width= "1" height= "3.14" depth= "1"
+           color="#a38e62" position="-1 -0.14 -10"
+			  event-set__enter="_event: mouseenter; material.color: #f0e29e"
+			  event-set__leave="_event: mouseleave; material.color: #a38e62"
+			  event-set__tarvis1="_event: click; _target: #closeandrea; visible: true" playa slowdown>
+	  	</a-box>
+                                                                         
+		  <a-image id="closeandrea" src="#close" position="-1 2.4 -10" visible="false" look-at="#cam"
+			   event-set__resvis1="_event: click; visible: false" stopa speedup>
+		  </a-image>
+      
+      <a-entity id="cubeandrea" sound="src: #andrea; volume:5"></a-entity>
 
+      <!-- Georg -->
+		  <a-box width= "1" height= "6" depth= "1"
+           color="#a38e62" position="7 0 -5"
+			  event-set__enter="_event: mouseenter; material.color: #f0e29e"
+			  event-set__leave="_event: mouseleave; material.color: #a38e62"
+			  event-set__tarvis1="_event: click; _target: #closegeorg; visible: true" playg slowdown>
+	  	</a-box>
+                                                                         
+		  <a-image id="closegeorg" src="#close" position="7 3.837 -5"  visible="false" look-at="#cam"
+			   event-set__resvis1="_event: click; visible: false" stopg speedup>
+		  </a-image>
+      
+      <a-entity id="cubegeorg" sound="src: #georg; volume:5"></a-entity>
+      
+
+      <!-- Mary -->
+		  <a-box width= "1" height= "3.78" depth= "1"
+      color="#a38e62" position="-1 -0.14 7"
+			  event-set__enter="_event: mouseenter; material.color: #f0e29e"
+			  event-set__leave="_event: mouseleave; material.color: #a38e62"
+			  event-set__tarvis1="_event: click; _target: #closemary; visible: true" playm slowdown>
+	  	</a-box>
+                                                                         
+		  <a-image id="closemary" src="#close" position="-1 2.4 7" visible="false" look-at="#cam"
+			   event-set__resvis1="_event: click; visible: false" stopm speedup>
+		  </a-image>
+      
+      <a-entity id="cubemary" sound="src: #mary; volume=5"></a-entity>
+      
+      
+      
+      <!--- other cubes --->
+    
+    </a-scene>
+
+     </body>
 </html>

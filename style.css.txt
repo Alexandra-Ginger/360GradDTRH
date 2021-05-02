@@ -1,0 +1,38 @@
+/* CSS files add styling rules to your content */
+
+body {
+  font-family: helvetica, arial, sans-serif;
+  margin: 2em;
+}
+
+h1 {
+  font-style: italic;
+  color: #373fff;
+}
+
+ .restart {
+            display: inline-block;
+            padding: 15px 25px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #ac0831;
+            border: none;
+            border-radius: 100px;
+            height: 18vh; 
+            width: 18vh;
+            box-shadow: 2px 8px rgb(39, 0, 2);
+        }
+
+        .restart:hover {
+            background-color: #c40837
+        }
+
+        .restart:active {
+            background-color: #ac0831;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
