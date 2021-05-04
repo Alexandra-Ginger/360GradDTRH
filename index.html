@@ -50,6 +50,30 @@
 		});
 	</script>
     
+<script>
+      document.addEventListener("DOMContentLoaded", function(event) {
+        var scene = document.querySelector("a-scene");
+
+        if (scene.hasLoaded) {
+          run();
+        } else {
+          scene.addEventListener("loaded", run);
+        }
+        
+        function run () {
+          if(AFRAME.utils.device.isMobile()) {
+            document.querySelector('#splash').style.display = 'flex';
+            document.querySelector('#splash').addEventListener('click', function () {
+              this.style.display = 'none';
+            })
+          }
+        }
+        
+      })
+      
+      
+    </script>
+	  
     <!--- Activating Cube Erna --->
       
   <script>
@@ -190,17 +214,21 @@
         var proj = document.getElementById("proj");
         
         function run () {
-  
               playVideo();
               this.style.display = 'none';
             }
         
         run();
-        
-        function playVideo () {
-          vid.play();
-          proj.components.material.material.map.image.play();
+   
+      function playVideo () {
+      vid.play();
+      proj.components.material.material.map.image.play();
+      vid.addEventListener("ended", function() {
+        //add videosphere here
+	console.log("The video has ended");
+				}) 
         }
+      })
 
   }
     
