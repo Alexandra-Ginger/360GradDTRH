@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>Down the rabbit hole!</title>
@@ -39,8 +39,20 @@
       }
     </style>
     
+  <script>
+		AFRAME.registerComponent('refresh-obj', {
+			init: function () {
+				this.el.addEventListener('click', function () {
+					var myGBcursor = document.querySelector('#myGBcursor');
+					myGBcursor.components.raycaster.refreshObjects();
+				});
+			}
+		});
+	</script>
+    
     <!--- Activating Cube Erna --->
-    <script>
+      
+  <script>
 		AFRAME.registerComponent('playe', {
 			init: function () {
 				var myEl = document.querySelector('#cubeerna');
@@ -48,10 +60,10 @@
 				this.el.addEventListener('click', function () {
 					myEl.components.sound.playSound();
           myVidE.play();
+          document.getElementById('closeerna').classList.add('clickable')
 				});
 			}
 		});
-      
       
 		AFRAME.registerComponent('stope', {
 			init: function () {
@@ -73,6 +85,7 @@
 				var myEl = document.querySelector('#cubeandrea');
 				this.el.addEventListener('click', function () {
 					myEl.components.sound.playSound();
+          document.getElementById('closeandrea').classList.add('clickable')
 				});
 			}
 		});
@@ -93,6 +106,7 @@
 				var myEl = document.querySelector('#cubegeorg');
 				this.el.addEventListener('click', function () {
 					myEl.components.sound.playSound();
+          document.getElementById('closegeorg').classList.add('clickable')
 				});
 			}
 		});
@@ -114,6 +128,7 @@
 				var myEl = document.querySelector('#cubemary');
 				this.el.addEventListener('click', function () {
 					myEl.components.sound.playSound();
+          document.getElementById('closemary').classList.add('clickable')
 				});
 			}
 		});
@@ -126,42 +141,6 @@
 			}
 		});
 	</script>
-    
-    
-    <!--- Loading, mobile?--->
-    <script>
-      document.addEventListener("DOMContentLoaded", function(event) {
-        var scene = document.querySelector("a-scene");
-        var vid = document.getElementById("video");
-        var proj = document.getElementById("proj");
-
-        if (scene.hasLoaded) {
-          run();
-        } else {
-          scene.addEventListener("loaded", run);
-        }
-        
-        function run () {
-          if(AFRAME.utils.device.isMobile()) {
-            document.querySelector('#splash').style.display = 'flex';
-            document.querySelector('#splash').addEventListener('click', function () {
-              playVideo();
-              this.style.display = 'none';
-            })
-          } else {
-              playVideo();
-          }
-        }
-        
-        function playVideo () {
-          vid.play();
-          proj.components.material.material.map.image.play();
-          vid.addEventListener("ended", function() {
-					console.log("The video has ended");
-				}) 
-        }
-      })
-    </script>
     
 				
     <script src="https://unpkg.com/aframe-multi-video-component/dist/aframe-multi-video-component.min.js"></script>
@@ -192,39 +171,79 @@
 		});
 	</script>
     
+  
+    <script type="text/javascript">
+
+
+  function setScene2() {
+    document.getElementById('scene1').setAttribute('visible', 'false')
+    document.getElementById('transition1').classList.remove('clickable')
+    document.getElementById('scene2').setAttribute('visible', 'true')
+    document.getElementById('transition2').classList.add('clickable')
+    document.getElementById('cubeerna').classList.add('clickable')
+    document.getElementById('cubeandrea').classList.add('clickable')
+    document.getElementById('cubegeorg').classList.add('clickable')
+    document.getElementById('cubemary').classList.add('clickable')
+    
+
+        var vid = document.getElementById("video");
+        var proj = document.getElementById("proj");
+        
+        function run () {
+  
+              playVideo();
+              this.style.display = 'none';
+            }
+        
+        run();
+        
+        function playVideo () {
+          vid.play();
+          proj.components.material.material.map.image.play();
+        }
+
+  }
+    
+  function setScene3() {
+    document.getElementById('scene2').setAttribute('visible', 'false')
+    document.getElementById('scene3').setAttribute('visible', 'true')
+    document.getElementById('transition2').classList.remove('clickable')
+    document.getElementById('cubeerna').classList.remove('clickable')
+    document.getElementById('cubeandrea').classList.remove('clickable')
+    document.getElementById('cubegeorg').classList.remove('clickable')
+    document.getElementById('closeerna').classList.remove('clickable')
+    document.getElementById('closeandrea').classList.remove('clickable')
+    document.getElementById('closegeorg').classList.remove('clickable')
+    document.getElementById('closemary').classList.remove('clickable')
+  }
+  </script>
+    
   </head> 
   
   
   <body>
     
-    
-    <div id="splash">
-    <div id="start-button">Los geht's!</div>
-    <button class="restart">
-        Restart
-    </button>
-    </div>
-    
     <a-scene antialias="true">
       
       <!--- assets--->
-      <a-assets timeout="10000">
+      <a-assets timeout="5000">
         <video id="video" preload="auto" src="https://cdn.glitch.com/6b3be800-0d26-4cf5-b0e0-e1ae2231fc02%2FUnbenannt-1.mp4?v=1619422761090" webkit-playsinline crossorigin="anonymous"></video>
         <video id="heartbeat_erna" preload="auto" src="https://cdn.glitch.com/6b3be800-0d26-4cf5-b0e0-e1ae2231fc02%2FStrobo%20Video%20Light.mp4?v=1619540391152" webkit-playsinline crossorigin="anonymous"></video>
         <audio id="erna" preload="auto" src="https://cdn.glitch.com/6b3be800-0d26-4cf5-b0e0-e1ae2231fc02%2FErna_Rentnerin_01.mp3?v=1619508162160" crossorigin="anonymous"></audio>
-        <audio id="mary" preload="auto" src="https://cdn.glitch.com/84b690e5-1cc8-41d6-b924-da49b51d872a%2FMary_Studentin_20210425_01.mp3?v=1619768669644"></audio>
+        <audio id="mary" preload="auto" src="https://cdn.glitch.com/84b690e5-1cc8-41d6-b924-da49b51d872a%2FMary_Studentin_20210425_01.mp3?v=1619768669644" crossorigin="anonymous"></audio>
         <audio id="andrea" preload="auto" src="https://cdn.glitch.com/6b3be800-0d26-4cf5-b0e0-e1ae2231fc02%2FAndrea_Verschwoerungsideologin_fuer%20Einreichung_20210130_01.mp3?v=1619508155901" crossorigin="anonymous"></audio>
         <audio id="georg" preload="auto" src="https://cdn.glitch.com/6b3be800-0d26-4cf5-b0e0-e1ae2231fc02%2FGeorg_Altenpfleger_20210129_01.mp3?v=1619508156612" crossorigin="anonymous"></audio>
         <image id="close" src ="https://cdn.glitch.com/6b3be800-0d26-4cf5-b0e0-e1ae2231fc02%2Fkisspng-computer-icons-symbol-circle-black-close-icon-5ab0da57bf6214.2979679915215396717839.png?v=1619440080274" crossorigin="anonymous"></image>
+        <img id="hintergrund" src ="https://cdn.glitch.com/6b3be800-0d26-4cf5-b0e0-e1ae2231fc02%2FHintergrund2.jpg?v=1620037606614">
       </a-assets>
       
-
       
       <!--- cam and cursor--->
       <a-camera id="cam">
-        <a-entity cursor="fuse: true; fuseTimeout: 1000" position="0 0 -1"
+        <a-entity id="myGBcursor" cursor="fuse: true; fuseTimeout: 1000" position="0 0 -1"
 					  geometry="primitive: sphere; radius: 0.005"
-					  material="color: #FFFFFF; shader: flat; opacity: 0.5">
+					  material="color: #FFFFFF; shader: flat; opacity: 0.5"
+                  raycaster="objects: .clickable">
 					  <a-animation attribute="scale"
 					  			   to="3 3 3"
 					  			   dur="1000"
@@ -233,10 +252,26 @@
 					  			   easing="linear">
 					  </a-animation>
 			  </a-entity>                                                 
+                                                                              
                                
       </a-camera>
       
+      <!--- Scene1--->
+      <a-entity id="scene1" position="" rotation="" scale="">
+
+      <a-sky src="#hintergrund" rotation="0 -90 0"></a-sky>
+      <a-box id="transition1" color="red" onclick="setScene2()" position="" rotation="" scale="" visible="" material="" geometry="" class="clickable" refresh-obj> </a-box>
+
+
+      </a-entity>
       
+     
+      <!--- Scene2--->
+      
+      <a-entity id="scene2" visible="false">
+      <a-box id="transition2" color="yellow" position="5 0 -5" onclick="setScene3()" rotation="" scale="" visible="" material="" geometry="" class="" refresh-obj> </a-box>
+      
+        
       <!--- lights--->
       <a-entity light="type:ambient; intensity: 0.4"></a-entity>
       <a-entity id="spot1" light="type: spot; color: #fff957; angle: 40.81; penumbra: 0.5" position="7.0255 3.71899 -5.05592" rotation="-90 0 0" ></a-entity>
@@ -247,81 +282,98 @@
       
       <!--- video--->
       
-      <a-videosphere id="proj" src="#video">
+      <a-videosphere id="proj" src="#video" class= "not-clickable">
       </a-videosphere> 
 
             
       <!--- floor--->
-      <a-plane id="boden" material="color:#574c4c" rotation= "-90 0 0" scale="1000 1000 1" position="0 -1.73 0">
+      <a-plane id="boden" material="color:#574c4c" rotation= "-90 0 0" scale="1000 1000 1" position="0 -1.73 0" class= "not-clickable">
       </a-plane>
       
       
+        
       <!--- activatable cubes, changing color, with an audio and the heartbeat--->
-      
-
-
+    
+        
       <!-- Erna -->
 		  <a-box id="cubeerna" width= "1" height= "5" depth= "1"
         color="#a38e62" position="-6 0 -3"
         material="src: #heartbeat_erna"
-        sound="src: #erna; volume:5"
+        sound="src: #erna; volume:7"
+        class= "not-clickable"
 			  event-set__enter="_event: mouseenter; material.color: #f0e29e"
 			  event-set__leave="_event: mouseleave; material.color: #a38e62"
-			  event-set__tarvis="_event: click; _target: #closeerna; visible: true" playe slowdown>
+			  event-set__tarvis="_event: click; _target: #closeerna; visible: true" playe slowdown refresh-obj>
 	  	</a-box>
-       
-		    <a-image id="closeerna" src="#close" position="-6 3.383 -3" visible="false" look-at="#cam"
-			     event-set__resvis="_event: click; visible: false" stope speedup>
-		    </a-image>
-
-      
+                                                                         
+		  <a-image id="closeerna" src="#close" position="-6 3.383 -3" visible="false" class= "not-clickable" look-at="#cam"
+			   event-set__resvis="_event: click; visible: false" stope speedup refresh-obj>
+		  </a-image>
+        
+        
       <!-- Andrea -->
 		  <a-box width= "1" height= "3.14" depth= "1"
            color="#a38e62" position="-1 -0.14 -10"
+             class= "not-clickable"
+             id="cubeandrea"
+             sound="src: #andrea; volume:7"
 			  event-set__enter="_event: mouseenter; material.color: #f0e29e"
 			  event-set__leave="_event: mouseleave; material.color: #a38e62"
-			  event-set__tarvis1="_event: click; _target: #closeandrea; visible: true" playa slowdown>
+			  event-set__tarvis1="_event: click; _target: #closeandrea; visible: true" playa slowdown refresh-obj>
 	  	</a-box>
                                                                          
-		  <a-image id="closeandrea" src="#close" position="-1 2.4 -10" visible="false" look-at="#cam"
-			   event-set__resvis1="_event: click; visible: false" stopa speedup>
+		  <a-image id="closeandrea" src="#close" position="-1 2.4 -10" visible="false" class= "not-clickable" look-at="#cam"
+			   event-set__resvis1="_event: click; visible: false" stopa speedup refresh-obj>
 		  </a-image>
-      
-      <a-entity id="cubeandrea" sound="src: #andrea; volume:5"></a-entity>
 
+        
       <!-- Georg -->
 		  <a-box width= "1" height= "6" depth= "1"
            color="#a38e62" position="7 0 -5"
+             id="cubegeorg" sound="src: #georg; volume:7"
+             class= "not-clickable"
 			  event-set__enter="_event: mouseenter; material.color: #f0e29e"
 			  event-set__leave="_event: mouseleave; material.color: #a38e62"
-			  event-set__tarvis1="_event: click; _target: #closegeorg; visible: true" playg slowdown>
+			  event-set__tarvis1="_event: click; _target: #closegeorg; visible: true" ; playg slowdown refresh-obj>
 	  	</a-box>
                                                                          
-		  <a-image id="closegeorg" src="#close" position="7 3.837 -5"  visible="false" look-at="#cam"
-			   event-set__resvis1="_event: click; visible: false" stopg speedup>
+		  <a-image id="closegeorg" src="#close" position="7 3.837 -5"  visible="false" class= "not-clickable" look-at="#cam"
+			   event-set__resvis1="_event: click; visible: false"  stopg speedup refresh-obj>
 		  </a-image>
-      
-      <a-entity id="cubegeorg" sound="src: #georg; volume:5"></a-entity>
-      
-
+        
+        
       <!-- Mary -->
 		  <a-box width= "1" height= "3.78" depth= "1"
-      color="#a38e62" position="-1 -0.14 7"
+           color="#a38e62" position="-1 -0.14 7"
+             id="cubemary" sound="src: #mary; volume:7"
+             class= "not-clickable"
 			  event-set__enter="_event: mouseenter; material.color: #f0e29e"
 			  event-set__leave="_event: mouseleave; material.color: #a38e62"
-			  event-set__tarvis1="_event: click; _target: #closemary; visible: true" playm slowdown>
+			  event-set__tarvis1="_event: click; _target: #closemary; visible: true" ; playm slowdown refresh-obj>
 	  	</a-box>
                                                                          
-		  <a-image id="closemary" src="#close" position="-1 2.4 7" visible="false" look-at="#cam"
-			   event-set__resvis1="_event: click; visible: false" stopm speedup>
+		  <a-image id="closemary" src="#close" position="-1 2.4 7"  visible="false" class= "not-clickable" look-at="#cam"
+			   event-set__resvis1="_event: click; visible: false"  stopm speedup refresh-obj>
 		  </a-image>
-      
-      <a-entity id="cubemary" sound="src: #mary; volume=5"></a-entity>
-      
-      
+       
       
       <!--- other cubes --->
     
+        
+      </a-entity>
+      
+      
+      <!--- Scene3--->
+
+      <a-entity id="scene3" position="" rotation="" scale="" visible="false">
+
+      <a-sky src="#hintergrund" rotation="0 -90 0"></a-sky>
+      <a-box color="blue" onclick="setScene2()" position="" rotation="" scale="" visible="" material="" geometry=""> </a-box>
+
+
+      </a-entity>
+      
+        
     </a-scene>
 
      </body>
